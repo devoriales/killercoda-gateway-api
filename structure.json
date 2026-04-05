@@ -1,4 +1,6 @@
 {
+  "title": "Devoriales — Kubernetes Interactive Labs",
+  "description": "Hands-on Kubernetes labs by devoriales.com. Full courses at https://devoriales.com",
   "items": [
     { "path": "gateway-api" }
   ]
