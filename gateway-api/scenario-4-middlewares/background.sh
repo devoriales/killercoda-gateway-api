@@ -197,4 +197,75 @@ spec:
       port: 80
 EOF
 
+# --- 12. Write middleware manifests to /root/manifests ---
+mkdir -p /root/manifests/06-traefik-middlewares
+
+cat > /root/manifests/06-traefik-middlewares/rate-limit.yaml <<'YAML'
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: rate-limit
+  namespace: bookstore
+spec:
+  rateLimit:
+    average: 10
+    burst: 20
+YAML
+
+cat > /root/manifests/06-traefik-middlewares/security-headers.yaml <<'YAML'
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: security-headers
+  namespace: bookstore
+spec:
+  headers:
+    customResponseHeaders:
+      X-Frame-Options: "DENY"
+      X-Content-Type-Options: "nosniff"
+      Referrer-Policy: "strict-origin-when-cross-origin"
+      Content-Security-Policy: "default-src 'self'"
+YAML
+
+cat > /root/manifests/06-traefik-middlewares/httproute-with-middleware.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-with-middleware
+  namespace: bookstore
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+    filters:
+    - type: ExtensionRef
+      extensionRef:
+        group: traefik.io
+        kind: Middleware
+        name: rate-limit
+    - type: ExtensionRef
+      extensionRef:
+        group: traefik.io
+        kind: Middleware
+        name: security-headers
+    backendRefs:
+    - name: bookstore
+      port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: bookstore
+      port: 80
+YAML
+
 echo "[setup] Scenario 4 background complete. Traefik routing bookstore.local on :30091 (HTTPS)."
