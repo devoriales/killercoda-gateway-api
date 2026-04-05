@@ -37,21 +37,14 @@
     ],
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        {"file": "manifests/**/*.*", "target": "/root/manifests"}
+      ]
     }
   },
   "backend": {
     "imageid": "kubernetes-kubeadm-1node"
-  },
-  "assets": {
-    "host01": [
-      {"file": "manifests/02-ingress-nginx/bookstore-ingress.yaml", "target": "/root/manifests/02-ingress-nginx/"},
-      {"file": "manifests/03-gateway-api/gatewayclass.yaml", "target": "/root/manifests/03-gateway-api/"},
-      {"file": "manifests/03-gateway-api/gateway-http.yaml", "target": "/root/manifests/03-gateway-api/"},
-      {"file": "manifests/03-gateway-api/gateway-https.yaml", "target": "/root/manifests/03-gateway-api/"},
-      {"file": "manifests/04-httproutes/basic-route.yaml", "target": "/root/manifests/04-httproutes/"},
-      {"file": "manifests/04-httproutes/header-based-route.yaml", "target": "/root/manifests/04-httproutes/"},
-      {"file": "manifests/05-advanced/canary-route.yaml", "target": "/root/manifests/05-advanced/"},
-      {"file": "manifests/06-traefik-middlewares/httproute-with-middleware.yaml", "target": "/root/manifests/06-traefik-middlewares/"}
-    ]
   }
 }
