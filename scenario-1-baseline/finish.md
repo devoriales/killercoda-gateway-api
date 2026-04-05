@@ -10,9 +10,9 @@ You've installed ingress-nginx and routed the bookstore API using a classic `Ing
 
 Continue to **Scenario 2** to install the Gateway API CRDs and Traefik v3 alongside ingress-nginx, and create your first `HTTPRoute`.
 
-**[→ Open Scenario 2: The Migration](https://killercoda.com/devoriales/scenario/gateway-api-lab-2-migration)**
+**[→ Open Scenario 2: The Migration](https://killercoda.com/devoriales/scenario/scenario-2-migration)**
 
 ---
 
-Want to test your understanding first? Take the quiz for this section:
+Want to test your understanding? Take the course
 **[Gateway API Learning Lab: From Zero to Hero](https://devoriales.com/quiz/20/gateway-api-learning-lab-from-zero-to-hero)**

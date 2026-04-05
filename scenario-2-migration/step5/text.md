@@ -42,8 +42,8 @@ kubectl apply -f /root/manifests/03-gateway-api/gateway-https.yaml
 ```
 
 This replaces the HTTP-only Gateway with one that has two listeners:
-- `http` on port 80
-- `https` on port 443, with `certificateRefs` pointing at `bookstore-tls`
+- `http` on port 8000 (Traefik's internal `web` entryPoint)
+- `https` on port 8443 (Traefik's internal `websecure` entryPoint), with `certificateRefs` pointing at `bookstore-tls`
 
 Check both listeners are programmed:
 

@@ -49,11 +49,13 @@ spec:
   listeners:
   - name: http
     protocol: HTTP
-    port: 80
+    port: 8000
     allowedRoutes:
       namespaces:
         from: Same
 ```
+
+> **Why port 8000?** Traefik's `web` entryPoint binds internally to port 8000 (as configured in the Helm values). The Gateway listener port must match the **internal** entryPoint port — not the NodePort or exposed port. Traefik maps `8000 → NodePort 30090` via the Service.
 
 Check the Gateway status:
 

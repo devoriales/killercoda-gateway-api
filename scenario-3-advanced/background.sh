@@ -176,7 +176,7 @@ spec:
   listeners:
   - name: http
     protocol: HTTP
-    port: 80
+    port: 8000
     allowedRoutes:
       namespaces:
         from: Same
@@ -193,13 +193,13 @@ spec:
   listeners:
   - name: http
     protocol: HTTP
-    port: 80
+    port: 8000
     allowedRoutes:
       namespaces:
         from: Same
   - name: https
     protocol: HTTPS
-    port: 443
+    port: 8443
     tls:
       mode: Terminate
       certificateRefs:
