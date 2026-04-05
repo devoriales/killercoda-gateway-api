@@ -94,6 +94,9 @@ spec:
       containers:
       - name: bookstore
         image: ghcr.io/devoriales/bookstore:v2
+        env:
+        - name: APP_VERSION
+          value: "v2"
         ports:
         - containerPort: 8000
         readinessProbe:

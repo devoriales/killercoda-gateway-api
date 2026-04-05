@@ -21,7 +21,7 @@ HTTPRoute     bookstore-route  ──▶  Service/bookstore
 
 Continue to **Scenario 3** to implement canary deployments and header-based routing, then remove ingress-nginx to complete the migration.
 
-**[→ Open Scenario 3: Advanced Routing and Cutover](https://killercoda.com/devoriales/scenario/gateway-api-lab-3-advanced)**
+**[→ Open Scenario 3: Advanced Routing and Cutover](https://killercoda.com/devoriales/scenario/scenario-3-advanced)**
 
 ---
 
