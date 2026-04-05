@@ -10,7 +10,7 @@ A **Killercoda monorepo** for [devoriales.com](https://devoriales.com) courses. 
 /
 ├── structure.json          # top-level: lists all courses by directory path
 ├── gateway-api/            # course: Kubernetes Gateway API (3 scenarios)
-│   ├── structure.json      # lists scenarios as "gateway-api/scenario-N-..."
+│   ├── structure.json      # lists scenarios as "scenario-N-..." (relative to course dir)
 │   ├── manifests/          # reference YAML copied to student VM via assets
 │   └── scenario-N-name/
 └── <future-course>/        # add new courses as sibling directories
@@ -19,7 +19,7 @@ A **Killercoda monorepo** for [devoriales.com](https://devoriales.com) courses. 
 ### Adding a new course
 
 1. Create a directory: `<course-slug>/`
-2. Add `<course-slug>/structure.json` listing its scenarios as `"<course-slug>/scenario-N-name"`
+2. Add `<course-slug>/structure.json` listing its scenarios as `"scenario-N-name"` (paths are relative to the course directory, NOT the repo root)
 3. Add `{ "path": "<course-slug>" }` to the root `structure.json`
 
 ### Gateway API course

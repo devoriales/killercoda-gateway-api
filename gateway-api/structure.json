@@ -1,7 +1,9 @@
 {
+  "title": "Kubernetes Gateway API — From Zero to Hero",
+  "description": "Hands-on labs for the Kubernetes Gateway API. Part of the full course at https://devoriales.com/quiz/20/gateway-api-learning-lab-from-zero-to-hero",
   "items": [
-    { "path": "gateway-api/scenario-1-baseline" },
-    { "path": "gateway-api/scenario-2-migration" },
-    { "path": "gateway-api/scenario-3-advanced" }
+    { "path": "scenario-1-baseline" },
+    { "path": "scenario-2-migration" },
+    { "path": "scenario-3-advanced" }
   ]
 }
