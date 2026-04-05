@@ -2,6 +2,19 @@
 
 One of the most compelling reasons to adopt the Gateway API is **native traffic splitting**. With ingress-nginx you'd need the `canary` annotation pattern with a duplicate Ingress resource. With the Gateway API it's a single `weight:` field.
 
+## Wait for the environment to be ready
+
+The background setup (Traefik, Gateway API CRDs, TLS) can take a few minutes. Run this before doing anything else — it will wait silently and print `Ready!` when everything is in place:
+
+```
+until kubectl get crd httproutes.gateway.networking.k8s.io &>/dev/null && \
+      kubectl get gateway bookstore-gateway -n bookstore &>/dev/null && \
+      kubectl get pods -n traefik --field-selector=status.phase=Running --no-headers 2>/dev/null | grep -q traefik; do
+  echo "Waiting for environment..."; sleep 5
+done
+echo "Ready!"
+```
+
 ## Check what's running
 
 ```

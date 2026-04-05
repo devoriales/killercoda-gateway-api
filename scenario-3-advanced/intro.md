@@ -20,3 +20,5 @@ In this final scenario you will use two advanced Gateway API features that would
 3. Remove ingress-nginx and verify the full migration
 
 **Estimated time:** ~20 minutes
+
+> **Before starting Step 1** — the background setup (Traefik, Gateway API CRDs, TLS) takes 3-5 minutes. Step 1 includes a one-liner to wait for readiness before you proceed.
