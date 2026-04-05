@@ -57,11 +57,7 @@ kubectl get gateway bookstore-gateway -n bookstore -o jsonpath='{.status.listene
 kubectl apply -f /root/manifests/04-httproutes/basic-route.yaml
 ```{{exec}}
 
-This route targets `sectionName: https`. Delete the old http-only route:
-
-```
-kubectl delete httproute bookstore-route -n bookstore
-```{{exec}}
+This route targets `sectionName: https`. Because the route name (`bookstore-route`) is the same as the one created in the previous step, `kubectl apply` updates it in-place — no delete needed.
 
 ## Test HTTPS
 
