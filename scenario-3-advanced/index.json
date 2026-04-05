@@ -1,0 +1,34 @@
+{
+  "title": "Gateway API Lab 3/3 — Advanced Routing and Cutover",
+  "description": "Implement canary deployments and header-based routing with native Gateway API features, then complete the migration by decommissioning ingress-nginx. Traefik and a working HTTPRoute are pre-installed.",
+  "difficulty": "Intermediate",
+  "time": "20",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Canary deployment with traffic splitting",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Header-based routing",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Complete the migration",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}

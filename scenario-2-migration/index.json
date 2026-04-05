@@ -1,0 +1,44 @@
+{
+  "title": "Gateway API Lab 2/3 — The Migration: Traefik + Gateway API",
+  "description": "Install the Kubernetes Gateway API CRDs and Traefik v3, then create a GatewayClass, Gateway, and your first HTTPRoute. Add TLS with mkcert. The bookstore and ingress-nginx are pre-installed so you can focus on the migration.",
+  "difficulty": "Intermediate",
+  "time": "30",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install Gateway API CRDs",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Install Traefik with Gateway API provider",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Create GatewayClass and Gateway",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      },
+      {
+        "title": "Your first HTTPRoute",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      },
+      {
+        "title": "TLS with mkcert",
+        "text": "step5/text.md",
+        "verify": "step5/verify.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}

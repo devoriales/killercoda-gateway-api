@@ -1,0 +1,34 @@
+{
+  "title": "Gateway API Lab 1/3 — The Baseline: ingress-nginx",
+  "description": "Deploy a bookstore API and expose it with ingress-nginx. Understand the classic Ingress model before migrating to the Kubernetes Gateway API in the next scenario.",
+  "difficulty": "Beginner",
+  "time": "20",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Explore the environment",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Install ingress-nginx",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Route traffic with an Ingress resource",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
