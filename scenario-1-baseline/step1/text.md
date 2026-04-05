@@ -23,11 +23,12 @@ You'll see:
 
 ## Reach the app directly
 
-The app is running but not yet exposed outside the cluster. Let's hit it through a pod directly to confirm it works:
+The app is running but not yet exposed outside the cluster. Port-forward the Service to localhost and curl it from the node:
 
-```
-POD=$(kubectl get pod -n bookstore -l app=bookstore,version=v1 -o jsonpath='{.items[0].metadata.name}')
-kubectl exec -n bookstore $POD -- curl -s http://localhost:8000/health
+```bash
+kubectl port-forward -n bookstore svc/bookstore 8000:80 &
+sleep 1
+curl -s http://localhost:8000/health
 ```
 
 Expected output:
@@ -37,8 +38,8 @@ Expected output:
 
 ## Explore the API
 
-```
-kubectl exec -n bookstore $POD -- curl -s http://localhost:8000/api/v1/books
+```bash
+curl -s http://localhost:8000/api/v1/books
 ```
 
 You'll get a JSON list of books. This is what you'll route externally via ingress-nginx and later via the Gateway API.
