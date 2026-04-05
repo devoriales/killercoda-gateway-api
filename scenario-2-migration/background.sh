@@ -130,7 +130,6 @@ kubectl wait --for=condition=Ready pods -l app=bookstore -n bookstore --timeout=
 echo "127.0.0.1 bookstore.local api.bookstore.local admin.bookstore.local" >> /etc/hosts
 
 # --- 6. Clone tutorial repo ---
-git clone --depth=1 https://github.com/devoriales/traefik-gateway-api-tutorial /root/tutorial 2>/dev/null || true
 
 # --- 7. Install ingress-nginx (scenario 1 outcome) ---
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 2>/dev/null || true
@@ -145,6 +144,6 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
   --wait --timeout=120s 2>/dev/null || true
 
 # --- 8. Apply the bookstore Ingress (scenario 1 outcome) ---
-kubectl apply -f /root/tutorial/manifests/02-ingress-nginx/bookstore-ingress.yaml 2>/dev/null || true
+kubectl apply -f /root/manifests/02-ingress-nginx/bookstore-ingress.yaml 2>/dev/null || true
 
 echo "[setup] Scenario 2 background complete. ingress-nginx routing bookstore.local on :30080."

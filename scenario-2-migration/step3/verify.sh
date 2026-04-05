@@ -15,7 +15,7 @@ fi
 # Check Gateway exists in bookstore namespace
 if ! kubectl get gateway bookstore-gateway -n bookstore &>/dev/null; then
   echo "Gateway 'bookstore-gateway' not found in namespace 'bookstore'."
-  echo "Run: kubectl apply -f /root/tutorial/manifests/03-gateway-api/gateway-http.yaml"
+  echo "Run: kubectl apply -f /root/manifests/03-gateway-api/gateway-http.yaml"
   exit 1
 fi
 

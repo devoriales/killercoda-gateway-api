@@ -38,7 +38,7 @@ kubectl get secret bookstore-tls -n bookstore
 ## Apply the HTTPS Gateway
 
 ```
-kubectl apply -f /root/tutorial/manifests/03-gateway-api/gateway-https.yaml
+kubectl apply -f /root/manifests/03-gateway-api/gateway-https.yaml
 ```
 
 This replaces the HTTP-only Gateway with one that has two listeners:
@@ -54,7 +54,7 @@ kubectl get gateway bookstore-gateway -n bookstore -o jsonpath='{.status.listene
 ## Update the HTTPRoute to use HTTPS
 
 ```
-kubectl apply -f /root/tutorial/manifests/04-httproutes/basic-route.yaml
+kubectl apply -f /root/manifests/04-httproutes/basic-route.yaml
 ```
 
 This route targets `sectionName: https`. Delete the old http-only route:

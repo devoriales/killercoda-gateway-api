@@ -19,6 +19,6 @@ Scenario 3  Canary routing, header-based routing, ingress-nginx decommissioned
 ## Continue learning
 
 - Complete the full course and quizzes: **[Gateway API Learning Lab: From Zero to Hero](https://devoriales.com/quiz/20/gateway-api-learning-lab-from-zero-to-hero)**
-- Try the advanced manifests in `/root/tutorial/manifests/06-traefik-middlewares/`
+- Try the advanced manifests in `/root/manifests/06-traefik-middlewares/`
 - Explore cross-namespace routing with `ReferenceGrant` in `manifests/07-cross-namespace/`
 - Review production-readiness patterns in `manifests/08-production/`

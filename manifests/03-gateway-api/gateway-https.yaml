@@ -1,0 +1,34 @@
+# Use Case: Update Gateway to add an HTTPS listener alongside HTTP (Lesson 07).
+# Apply: kubectl apply -f 03-gateway-api/gateway-https.yaml
+# Prerequisites: bookstore-tls Secret created from mkcert certificate
+# This replaces gateway-http.yaml (full resource, not a patch).
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: bookstore-gateway
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  gatewayClassName: traefik
+  listeners:
+  # HTTP listener: receives redirects only (see http-redirect.yaml)
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: Same
+  # HTTPS listener: receives all application traffic
+  - name: https
+    protocol: HTTPS
+    port: 443
+    tls:
+      # Terminate TLS at the Gateway; forward plain HTTP to backends
+      mode: Terminate
+      certificateRefs:
+      # Kubernetes Secret of type kubernetes.io/tls in the same namespace
+      - name: bookstore-tls
+    allowedRoutes:
+      namespaces:
+        from: Same

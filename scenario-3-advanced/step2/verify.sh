@@ -18,7 +18,7 @@ done
 
 if [ -z "$ROUTE_NAME" ]; then
   echo "No HTTPRoute with a headers match found in namespace 'bookstore'."
-  echo "Run: kubectl apply -f /root/tutorial/manifests/04-httproutes/header-based-route.yaml"
+  echo "Run: kubectl apply -f /root/manifests/04-httproutes/header-based-route.yaml"
   exit 1
 fi
 

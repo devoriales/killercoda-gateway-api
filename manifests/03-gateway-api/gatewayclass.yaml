@@ -1,0 +1,13 @@
+# Use Case: Register Traefik as the Gateway API controller for this cluster.
+# Apply: kubectl apply -f 03-gateway-api/gatewayclass.yaml
+# Prerequisites: Gateway API CRDs installed, Traefik running
+# GatewayClass is cluster-scoped (no namespace field).
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: traefik
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  # controllerName must exactly match the value Traefik watches for
+  controllerName: traefik.io/gateway-controller

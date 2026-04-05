@@ -1,0 +1,25 @@
+# Use Case: Route bookstore.local traffic via ingress-nginx (Lesson 04 baseline).
+# Apply: kubectl apply -f 02-ingress-nginx/bookstore-ingress.yaml
+# Prerequisites: ingress-nginx controller installed and running
+# Note: This is the BEFORE state — replaced by HTTPRoute in Lesson 06.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookstore-ingress
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  # References the ingress-nginx IngressClass
+  ingressClassName: nginx
+  rules:
+  - host: bookstore.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bookstore
+            port:
+              number: 80

@@ -1,0 +1,44 @@
+# Use Case: Route all bookstore.local traffic through the Gateway API (Lesson 06).
+# Apply: kubectl apply -f 04-httproutes/basic-route.yaml
+# Prerequisites: bookstore Service running, bookstore-gateway programmed
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-route
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  parentRefs:
+  # Attach to the HTTPS listener on bookstore-gateway
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  # Only match requests with this Host header
+  - bookstore.local
+  rules:
+  # /api/v1 paths — separate rule for future per-path policy
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api/v1
+    backendRefs:
+    - name: bookstore
+      port: 80
+  # /api/v2 paths
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api/v2
+    backendRefs:
+    - name: bookstore
+      port: 80
+  # Catch-all: all other paths go to bookstore
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: bookstore
+      port: 80

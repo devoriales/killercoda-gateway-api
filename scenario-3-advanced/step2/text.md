@@ -5,7 +5,7 @@ With a classic Ingress and ingress-nginx, header-based routing requires the `can
 ## Apply the header-based route
 
 ```
-kubectl apply -f /root/tutorial/manifests/04-httproutes/header-based-route.yaml
+kubectl apply -f /root/manifests/04-httproutes/header-based-route.yaml
 ```
 
 The route adds a rule that fires when the request carries `X-API-Version: v2`:

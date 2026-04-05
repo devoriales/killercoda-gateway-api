@@ -14,7 +14,7 @@ You have `bookstore` (v1, 2 replicas) and `bookstore-v2` (1 replica) both runnin
 ## Apply the canary route
 
 ```
-kubectl apply -f /root/tutorial/manifests/05-advanced/canary-route.yaml
+kubectl apply -f /root/manifests/05-advanced/canary-route.yaml
 ```
 
 The key part of the manifest:

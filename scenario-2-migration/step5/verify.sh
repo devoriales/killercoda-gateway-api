@@ -15,7 +15,7 @@ LISTENERS=$(kubectl get gateway bookstore-gateway -n bookstore \
 
 if [[ "$LISTENERS" != *"https"* ]]; then
   echo "Gateway 'bookstore-gateway' does not have an 'https' listener yet."
-  echo "Run: kubectl apply -f /root/tutorial/manifests/03-gateway-api/gateway-https.yaml"
+  echo "Run: kubectl apply -f /root/manifests/03-gateway-api/gateway-https.yaml"
   exit 1
 fi
 

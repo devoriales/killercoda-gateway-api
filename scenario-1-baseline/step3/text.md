@@ -5,7 +5,7 @@ With ingress-nginx running, you can now create an `Ingress` resource to expose t
 ## Apply the Ingress manifest
 
 ```
-kubectl apply -f /root/tutorial/manifests/02-ingress-nginx/bookstore-ingress.yaml
+kubectl apply -f /root/manifests/02-ingress-nginx/bookstore-ingress.yaml
 ```
 
 This creates:

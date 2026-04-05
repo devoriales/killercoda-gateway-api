@@ -129,6 +129,5 @@ kubectl wait --for=condition=Ready pods -l app=bookstore -n bookstore --timeout=
 echo "127.0.0.1 bookstore.local api.bookstore.local admin.bookstore.local" >> /etc/hosts
 
 # --- 6. Clone tutorial repo ---
-git clone --depth=1 https://github.com/devoriales/traefik-gateway-api-tutorial /root/tutorial 2>/dev/null || true
 
 echo "[setup] Scenario 1 background complete."

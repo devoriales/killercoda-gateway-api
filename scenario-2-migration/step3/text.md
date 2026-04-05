@@ -8,7 +8,7 @@ Now that Traefik is running with the Gateway API provider enabled, you need two 
 ## Create the GatewayClass
 
 ```
-kubectl apply -f /root/tutorial/manifests/03-gateway-api/gatewayclass.yaml
+kubectl apply -f /root/manifests/03-gateway-api/gatewayclass.yaml
 ```
 
 The manifest:
@@ -33,7 +33,7 @@ Look for `ACCEPTED: True` in the output. Traefik sets this once it recognises th
 ## Create the Gateway (HTTP listener only)
 
 ```
-kubectl apply -f /root/tutorial/manifests/03-gateway-api/gateway-http.yaml
+kubectl apply -f /root/manifests/03-gateway-api/gateway-http.yaml
 ```
 
 The manifest:

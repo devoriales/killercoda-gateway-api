@@ -1,0 +1,31 @@
+# Use Case: Send 90% of traffic to bookstore v1 and 10% to v2 (canary deployment, Lesson 08).
+# This is native Gateway API traffic splitting — no vendor annotations needed.
+# Apply: kubectl apply -f 05-advanced/canary-route.yaml
+# Prerequisites: bookstore-v2 Deployment and Service exist
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-canary
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    # Weights are relative: 90/(90+10) = 90% to v1, 10/(90+10) = 10% to v2
+    - name: bookstore
+      port: 80
+      weight: 90
+    - name: bookstore-v2
+      port: 80
+      weight: 10

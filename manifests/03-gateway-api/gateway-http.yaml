@@ -1,0 +1,21 @@
+# Use Case: Create a Gateway with only an HTTP listener (Lesson 05 initial state).
+# Apply: kubectl apply -f 03-gateway-api/gateway-http.yaml
+# Prerequisites: gatewayclass.yaml applied, Traefik running
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: bookstore-gateway
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  # References the GatewayClass defined in gatewayclass.yaml
+  gatewayClassName: traefik
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        # Only allow HTTPRoutes from the same namespace (bookstore)
+        from: Same

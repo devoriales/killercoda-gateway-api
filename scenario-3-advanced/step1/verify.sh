@@ -4,7 +4,7 @@ set -e
 
 if ! kubectl get httproute bookstore-canary -n bookstore &>/dev/null; then
   echo "HTTPRoute 'bookstore-canary' not found."
-  echo "Run: kubectl apply -f /root/tutorial/manifests/05-advanced/canary-route.yaml"
+  echo "Run: kubectl apply -f /root/manifests/05-advanced/canary-route.yaml"
   exit 1
 fi
 

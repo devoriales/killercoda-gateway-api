@@ -1,0 +1,39 @@
+# Use Case: Route requests with X-Api-Version: v2 header to a different backend (Lesson 06).
+# This is a native Gateway API feature — no equivalent exists in the Ingress API.
+# Apply: kubectl apply -f 04-httproutes/header-based-route.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-header-route
+  namespace: bookstore
+  labels:
+    app.kubernetes.io/part-of: bookstore-tutorial
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  # Rule 1: Requests to /api WITH X-Api-Version: v2 header
+  # This rule is more specific — it will match before rule 2
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+      headers:
+      - name: X-Api-Version
+        value: v2
+    backendRefs:
+    # In a real scenario, point this at a v2-specific Service
+    - name: bookstore-v2
+      port: 80
+  # Rule 2: All other /api requests (no header match required)
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+    backendRefs:
+    - name: bookstore
+      port: 80

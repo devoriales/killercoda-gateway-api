@@ -129,7 +129,6 @@ kubectl wait --for=condition=Ready pods -l app=bookstore -n bookstore --timeout=
 echo "127.0.0.1 bookstore.local api.bookstore.local admin.bookstore.local" >> /etc/hosts
 
 # --- 6. Clone tutorial repo ---
-git clone --depth=1 https://github.com/devoriales/traefik-gateway-api-tutorial /root/tutorial 2>/dev/null || true
 
 # --- 7. ingress-nginx (scenario 1 outcome) ---
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 2>/dev/null || true
@@ -144,7 +143,7 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
   --set controller.service.nodePorts.https=30443 \
   --wait --timeout=120s 2>/dev/null || true
 
-kubectl apply -f /root/tutorial/manifests/02-ingress-nginx/bookstore-ingress.yaml 2>/dev/null || true
+kubectl apply -f /root/manifests/02-ingress-nginx/bookstore-ingress.yaml 2>/dev/null || true
 
 # --- 8. Gateway API CRDs (scenario 2 outcome) ---
 kubectl apply --server-side \
@@ -182,7 +181,7 @@ helm install traefik traefik/traefik \
   --wait --timeout=120s 2>/dev/null || true
 
 # --- 10. GatewayClass + Gateway with HTTPS listener (scenario 2 outcome) ---
-kubectl apply -f /root/tutorial/manifests/03-gateway-api/gatewayclass.yaml 2>/dev/null || true
+kubectl apply -f /root/manifests/03-gateway-api/gatewayclass.yaml 2>/dev/null || true
 
 # Generate TLS cert and create secret before applying https gateway
 cd /root
@@ -194,12 +193,12 @@ kubectl create secret tls bookstore-tls \
   -n bookstore \
   --dry-run=client -o yaml | kubectl apply -f - 2>/dev/null || true
 
-kubectl apply -f /root/tutorial/manifests/03-gateway-api/gateway-https.yaml 2>/dev/null || true
+kubectl apply -f /root/manifests/03-gateway-api/gateway-https.yaml 2>/dev/null || true
 
 # Wait for gateway to be programmed
 sleep 10
 
 # --- 11. Basic HTTPRoute targeting https listener (scenario 2 outcome) ---
-kubectl apply -f /root/tutorial/manifests/04-httproutes/basic-route.yaml 2>/dev/null || true
+kubectl apply -f /root/manifests/04-httproutes/basic-route.yaml 2>/dev/null || true
 
 echo "[setup] Scenario 3 background complete. Traefik routing bookstore.local on :30091 (HTTPS)."
