@@ -36,6 +36,14 @@ rules:
 
 Weights are relative: `90 / (90 + 10) = 90%`. No annotations, no duplicate resources.
 
+## Remove the existing route
+
+The background pre-installed a basic HTTPRoute (`bookstore-route`) that sends all traffic to v1. Delete it before testing — if both routes exist Traefik picks one and the split won't work:
+
+```
+kubectl delete httproute bookstore-route -n bookstore 2>/dev/null || true
+```
+
 ## Test the split
 
 Send 20 requests and observe the distribution:
@@ -50,11 +58,5 @@ done | sort | uniq -c
 ```
 
 You should see roughly 18 hits on v1 and 2 on v2. The exact split varies — Traefik distributes at the connection level, not per-request.
-
-## Delete the old basic route to avoid conflict
-
-```
-kubectl delete httproute bookstore-route -n bookstore 2>/dev/null || true
-```
 
 Click **Check** to verify the canary route is in place.
