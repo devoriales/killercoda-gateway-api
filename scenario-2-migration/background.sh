@@ -129,7 +129,183 @@ kubectl wait --for=condition=Ready pods -l app=bookstore -n bookstore --timeout=
 # --- 5. /etc/hosts ---
 echo "127.0.0.1 bookstore.local api.bookstore.local admin.bookstore.local" >> /etc/hosts
 
-# --- 6. Clone tutorial repo ---
+# --- 6. Write manifests to /root/manifests ---
+mkdir -p /root/manifests/02-ingress-nginx \
+         /root/manifests/03-gateway-api \
+         /root/manifests/04-httproutes \
+         /root/manifests/05-advanced \
+         /root/manifests/06-traefik-middlewares
+
+cat > /root/manifests/02-ingress-nginx/bookstore-ingress.yaml <<'YAML'
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookstore-ingress
+  namespace: bookstore
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bookstore.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bookstore
+            port:
+              number: 80
+YAML
+
+cat > /root/manifests/03-gateway-api/gatewayclass.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: traefik
+spec:
+  controllerName: traefik.io/gateway-controller
+YAML
+
+cat > /root/manifests/03-gateway-api/gateway-http.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: bookstore-gateway
+  namespace: bookstore
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: Same
+YAML
+
+cat > /root/manifests/03-gateway-api/gateway-https.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: bookstore-gateway
+  namespace: bookstore
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: Same
+  - name: https
+    protocol: HTTPS
+    port: 443
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: bookstore-tls
+    allowedRoutes:
+      namespaces:
+        from: Same
+YAML
+
+cat > /root/manifests/04-httproutes/basic-route.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-route
+  namespace: bookstore
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api/v1
+    backendRefs:
+    - name: bookstore
+      port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api/v2
+    backendRefs:
+    - name: bookstore
+      port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: bookstore
+      port: 80
+YAML
+
+cat > /root/manifests/04-httproutes/header-based-route.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-header-route
+  namespace: bookstore
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+      headers:
+      - name: X-Api-Version
+        value: v2
+    backendRefs:
+    - name: bookstore-v2
+      port: 80
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /api
+    backendRefs:
+    - name: bookstore
+      port: 80
+YAML
+
+cat > /root/manifests/05-advanced/canary-route.yaml <<'YAML'
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bookstore-canary
+  namespace: bookstore
+spec:
+  parentRefs:
+  - name: bookstore-gateway
+    namespace: bookstore
+    sectionName: https
+  hostnames:
+  - bookstore.local
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: bookstore
+      port: 80
+      weight: 90
+    - name: bookstore-v2
+      port: 80
+      weight: 10
+YAML
 
 # --- 7. Install ingress-nginx (scenario 1 outcome) ---
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 2>/dev/null || true
