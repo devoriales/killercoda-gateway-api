@@ -1,7 +1,5 @@
 {
   "items": [
-    { "path": "scenario-1-baseline" },
-    { "path": "scenario-2-migration" },
-    { "path": "scenario-3-advanced" }
+    { "path": "gateway-api" }
   ]
 }
